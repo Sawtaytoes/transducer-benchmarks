@@ -1,3 +1,7 @@
+const {
+  forEach,
+} = require('ramda')
+
 const array = require('./array.js')
 const timer = require('./timer.js')
 
@@ -10,13 +14,13 @@ const {
 
 startProcessing()
 
-for (
-  let index = 0,
-    length = array.length
-  ;index < length
-  ;index += 1
-) {
-  //
-}
+forEach(
+  (
+    Function
+    .prototype
+  ),
+)(
+  array,
+)
 
 stopProcessing()

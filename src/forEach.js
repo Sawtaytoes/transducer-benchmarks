@@ -10,13 +10,10 @@ const {
 
 startProcessing()
 
-for (
-  let index = 0,
-    length = array.length
-  ;index < length
-  ;index += 1
-) {
-  //
-}
+array
+.forEach(
+  Function
+  .prototype
+)
 
 stopProcessing()

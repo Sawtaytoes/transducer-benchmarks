@@ -5,6 +5,7 @@
   "author": "Kevin Ghadyani",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.21",
     "ramda": "^0.27.1",
     "rxjs": "^7.3.0",
     "yargs": "^17.1.1"

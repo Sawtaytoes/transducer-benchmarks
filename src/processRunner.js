@@ -1,51 +1,55 @@
-const { fork } = require('child_process')
-const os = require('os')
-const {
-  filter,
-  ignoreElements,
-  map,
-  mergeAll,
-  takeUntil,
-  tap,
-} = require('rxjs/operators')
 const {
   from,
-  fromEvent,
-  Observable,
-  Subject,
+  of,
 } = require('rxjs')
+const {
+  concatMap,
+  map,
+  repeat,
+  tap,
+  toArray,
+} = require('rxjs/operators')
 
-const controller = new AbortController()
-const { signal } = controller
-const child = (
-  fork(
-    (
-      require
-      .resolve(
-        './for.js'
-      )
-    ),
-    [
-      '--count',
-      '100000',
-    ],
-    {
-      signal,
-    },
-  )
+const createChildProcessObservable = require('./createChildProcessObservable.js')
+const logSectionBreak = require('./logSectionBreak.js')
+
+logSectionBreak()
+
+from([
+  'for',
+  'forEach',
+  'lodash',
+  'ramdaFunctional',
+  'ramdaTransducer',
+  'rxjs',
+])
+.pipe(
+  concatMap((
+    type,
+  ) => (
+    createChildProcessObservable({
+      count: 10000,
+      type,
+    })
+    .pipe(
+      map(({
+        duration,
+      }) => ({
+        duration,
+        type,
+      })),
+      tap(
+        console
+        .info
+      ),
+      repeat(
+        3
+      ),
+      toArray(),
+      tap(
+        logSectionBreak
+      ),
+    )
+  )),
 )
-
-child
-.on('message', ({
-  duration,
-}) => {
-  console.log(duration);
-  // This will be called with error being an AbortError if the controller aborts
-  controller.abort() // Stops the child process
-})
-
-child
-.on('error', (error) => {
-  // This will be called with error being an AbortError if the controller aborts
-})
-
+.subscribe()

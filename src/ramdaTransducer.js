@@ -1,3 +1,10 @@
+const {
+  append,
+  flip,
+  forEach,
+  transduce,
+} = require('ramda')
+
 const array = require('./array.js')
 const timer = require('./timer.js')
 
@@ -10,13 +17,15 @@ const {
 
 startProcessing()
 
-for (
-  let index = 0,
-    length = array.length
-  ;index < length
-  ;index += 1
-) {
-  //
-}
+transduce(
+  forEach,
+  (
+    flip(
+      append
+    )
+  ),
+  [],
+  array,
+)
 
 stopProcessing()
