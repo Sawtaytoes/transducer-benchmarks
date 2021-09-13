@@ -1,7 +1,5 @@
 const {
-  append,
-  flip,
-  forEach,
+  tap,
   transduce,
 } = require('ramda')
 
@@ -17,14 +15,29 @@ const {
 
 startProcessing()
 
+// transduce(
+//   tap(
+//     Function
+//     .prototype
+//   ),
+//   (
+//     flip(
+//       append
+//     )
+//   ),
+//   [],
+//   array,
+// )
 transduce(
-  forEach,
-  (
-    flip(
-      append
-    )
+  tap(
+    Function
+    .prototype
   ),
-  [],
+  (
+    Function
+    .prototype
+  ),
+  null,
   array,
 )
 

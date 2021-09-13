@@ -16,7 +16,8 @@ for (
   ;index < length
   ;index += 1
 ) {
-  //
+  Function
+  .prototype()
 }
 
 stopProcessing()

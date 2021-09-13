@@ -1,7 +1,3 @@
-const {
-  from,
-} = require('rxjs')
-
 const array = require('./array.js')
 const timer = require('./timer.js')
 
@@ -14,12 +10,14 @@ const {
 
 startProcessing()
 
-from(
-  array
-)
-.subscribe(
+for (
+  let index = 0,
+    length = array.length
+  ;index < length
+  ;index += 1
+) {
   Function
-  .prototype
-)
+  .prototype()
+}
 
 stopProcessing()

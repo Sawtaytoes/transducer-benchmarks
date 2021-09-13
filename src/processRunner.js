@@ -13,42 +13,83 @@ const {
 const createChildProcessObservable = require('./createChildProcessObservable.js')
 const logSectionBreak = require('./logSectionBreak.js')
 
-logSectionBreak()
+const counts = [
+  0,
+  1,
+  10,
+  100,
+  1000,
+  5000,
+  10000,
+  100000,
+  1000000,
+  10000000,
+]
 
-from([
-  'for',
+const functionTypes = [
   'forEach',
+  'forWithLength',
+  'forWithoutLength',
   'lodash',
   'ramdaFunctional',
   'ramdaTransducer',
   'rxjs',
-])
+]
+
+logSectionBreak()
+
+from(
+  counts
+)
 .pipe(
   concatMap((
-    type,
+    count,
   ) => (
-    createChildProcessObservable({
-      count: 10000,
-      type,
-    })
+    from(
+      functionTypes
+    )
     .pipe(
-      map(({
-        duration,
-      }) => ({
-        duration,
+      concatMap((
         type,
-      })),
-      tap(
-        console
-        .info
-      ),
-      repeat(
-        3
-      ),
-      toArray(),
-      tap(
-        logSectionBreak
-      ),
+      ) => (
+        createChildProcessObservable({
+          count,
+          type,
+        })
+        .pipe(
+          map(({
+            duration,
+          }) => ({
+            count,
+            duration,
+            type,
+          })),
+          // tap((
+          //   data,
+          // ) => {
+          //   console
+          //   .info(
+          //     JSON
+          //     .stringify(
+          //       data,
+          //       null,
+          //       2,
+          //     )
+          //   )
+          // }),
+          tap(
+            console
+            .info
+          ),
+          repeat(
+            3
+          ),
+          toArray(),
+          tap(
+            logSectionBreak
+          ),
+        )
+      )),
     )
   )),
 )
