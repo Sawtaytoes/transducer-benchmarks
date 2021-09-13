@@ -33,7 +33,8 @@ const loopTypes = [
   'lodash',
   'ramdaFunctional',
   'ramdaTransducer',
-  'rxjs',
+  'rxjsPipeline',
+  'rxjsSubscriber',
 ]
 
 logSectionBreak()

@@ -1,6 +1,9 @@
 const {
   from,
 } = require('rxjs')
+const {
+  tap,
+} = require('rxjs/operators')
 
 const array = require('./array.js')
 const timer = require('./timer.js')
