@@ -26,7 +26,7 @@ const counts = [
   10000000,
 ]
 
-const functionTypes = [
+const loopTypes = [
   'forEach',
   'forWithLength',
   'forWithoutLength',
@@ -39,22 +39,22 @@ const functionTypes = [
 logSectionBreak()
 
 from(
-  counts
+  loopTypes
 )
 .pipe(
   concatMap((
-    count,
+    loopType,
   ) => (
     from(
-      functionTypes
+      counts
     )
     .pipe(
       concatMap((
-        type,
+        count,
       ) => (
         createChildProcessObservable({
           count,
-          type,
+          filename: loopType,
         })
         .pipe(
           map(({
@@ -62,7 +62,7 @@ from(
           }) => ({
             count,
             duration,
-            type,
+            loopType,
           })),
           // tap((
           //   data,

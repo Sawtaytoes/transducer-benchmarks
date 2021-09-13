@@ -7,7 +7,7 @@ const {
 
 const createChildProcessObservable = ({
   count,
-  type,
+  filename,
 }) => (
   Observable
   .create((
@@ -22,7 +22,7 @@ const createChildProcessObservable = ({
         (
           require
           .resolve(
-            `./${type}.js`
+            `./${filename}.js`
           )
         ),
         [
