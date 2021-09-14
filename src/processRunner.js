@@ -163,8 +163,45 @@ from(
           map((
             stats,
           ) => ({
+            average: (
+              stats
+              ? (
+                (
+                  stats
+                  .filter(
+                    Boolean
+                  )
+                  .reduce((
+                    total,
+                    value,
+                  ) => (
+                    total
+                    + value
+                  ))
+                ) / (
+                  stats
+                  .length
+                )
+              )
+              : null
+            ),
             count,
             loopType,
+            median: (
+              stats
+              ? (
+                stats
+                .filter(
+                  Boolean
+                )
+                .slice()
+                .sort()
+                .at(
+                  5
+                )
+              )
+              : null
+            ),
             stats,
             taskName,
           })),
