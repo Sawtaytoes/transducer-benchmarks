@@ -26,8 +26,10 @@ const loopTypes = [
   'lodash',
   'ramdaFunctional',
   'ramdaTransducer',
+  'rubico',
   'rxjsPipeline',
   'rxjsSubscriber',
+  'thing',
 ]
 
 const tasks = [

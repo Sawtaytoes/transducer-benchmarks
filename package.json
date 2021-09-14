@@ -11,11 +11,13 @@
     "start": "nodemon ./src/processRunner.js"
   },
   "dependencies": {
+    "@thi.ng/transducers": "^7.9.2",
     "jest": "^27.2.0",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.12",
     "ramda": "^0.27.1",
-    "rxjs": "^7.3.0",
+    "rubico": "^1.8.1",
+    "rxjs": "6.6.7",
     "yargs": "^17.1.1"
   }
 }
