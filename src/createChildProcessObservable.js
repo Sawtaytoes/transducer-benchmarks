@@ -66,6 +66,14 @@ const createChildProcessObservable = ({
         )
       }
     )
+
+    setTimeout(
+      () => {
+        controller
+        .abort()
+      },
+      1000,
+    )
   })
 )
 

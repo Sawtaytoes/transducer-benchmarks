@@ -14,10 +14,8 @@ const runTask = (
   if (taskName) {
     startProcessing()
 
-    console.log(
     tasks
     [taskName]()
-    )
 
     stopProcessing()
   }

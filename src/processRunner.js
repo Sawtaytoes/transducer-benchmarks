@@ -7,6 +7,7 @@ const {
   of,
 } = require('rxjs')
 const {
+  catchError,
   concatMap,
   map,
   pluck,
@@ -14,7 +15,6 @@ const {
   tap,
   toArray,
 } = require('rxjs/operators')
-const yargs = require('yargs')
 
 const createChildProcessObservable = require('./createChildProcessObservable.js')
 const logSectionBreak = require('./logSectionBreak.js')
@@ -22,91 +22,107 @@ const logSectionBreak = require('./logSectionBreak.js')
 const loopTypes = [
   'arrayPrototype',
   'forWithLength',
-  // 'forWithoutLength',
+  'forWithoutLength',
   'lodash',
   'ramdaFunctional',
   'ramdaTransducer',
   'rxjsPipeline',
-  // 'rxjsSubscriber',
+  'rxjsSubscriber',
 ]
 
 const tasks = [
-  // {
-  //   count: 0,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 1,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 10,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 100,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 1000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 5000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 10000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 100000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 1000000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 10000000,
-  //   taskName: 'basicLoop',
-  // },
-  // {
-  //   count: 10,
-  //   taskName: 'duplicateUp',
-  // },
-  // {
-  //   count: 100,
-  //   taskName: 'duplicateUp',
-  // },
-  // {
-  //   count: Infinity,
-  //   taskName: 'duplicateUp',
-  // },
-  // {
-  //   count: 10,
-  //   taskName: 'filterDown',
-  // },
-  // {
-  //   count: 100,
-  //   taskName: 'filterDown',
-  // },
-  // {
-  //   count: Infinity,
-  //   taskName: 'filterDown',
-  // },
+  {
+    count: 0,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 1,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 10,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 100,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 1000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 5000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 10000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 100000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 1000000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 10000000,
+    taskName: 'basicLoop',
+  },
+  {
+    count: 10,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: 100,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: Infinity,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: 10,
+    taskName: 'filterDown',
+  },
+  {
+    count: 100,
+    taskName: 'filterDown',
+  },
+  {
+    count: Infinity,
+    taskName: 'filterDown',
+  },
   {
     count: 10,
     taskName: 'incrementingTransform',
   },
-  // {
-  //   count: 100,
-  //   taskName: 'incrementingTransform',
-  // },
-  // {
-  //   count: Infinity,
-  //   taskName: 'incrementingTransform',
-  // },
+  {
+    count: 100,
+    taskName: 'incrementingTransform',
+  },
+  {
+    count: 1000,
+    taskName: 'incrementingTransform',
+  },
+  {
+    count: 10000,
+    taskName: 'incrementingTransform',
+  },
+  {
+    count: 100000,
+    taskName: 'incrementingTransform',
+  },
+  {
+    count: 1000000,
+    taskName: 'incrementingTransform',
+  },
+  {
+    count: 10000000,
+    taskName: 'incrementingTransform',
+  },
 ]
 
 logSectionBreak()
@@ -132,13 +148,18 @@ from(
           taskName,
         })
         .pipe(
-          // repeat(
-          //   3
-          // ),
+          repeat(
+            10
+          ),
           pluck(
             'duration'
           ),
           toArray(),
+          catchError(() => (
+            of(
+              null
+            )
+          )),
           map((
             stats,
           ) => ({

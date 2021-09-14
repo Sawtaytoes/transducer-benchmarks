@@ -14,20 +14,31 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const executeRxjs = require('./executeRxjs.js')
 const runTask = require('./runTask.js')
+
+const executeRxjs = (
+  observable$,
+) => {
+  let outputValue
+
+  observable$
+  .pipe(
+    tap((
+      value,
+    ) => {
+      outputValue = value
+    }),
+  )
+  .subscribe()
+
+  return outputValue
+}
 
 const tasks = {
   basicLoop: () => (
     executeRxjs(
       from(
         array
-      )
-      .pipe(
-        tap(
-          Function
-          .prototype
-        )
       )
     )
   ),
