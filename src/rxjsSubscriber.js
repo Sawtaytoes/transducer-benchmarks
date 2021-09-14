@@ -10,8 +10,7 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
   basicLoop: () => {
@@ -25,16 +24,8 @@ const tasks = {
   },
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
+runTask(
+  tasks
 )
 
-startProcessing()
-
-tasks
-[taskName]()
-
-stopProcessing()
+module.exports = tasks

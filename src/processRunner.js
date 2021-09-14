@@ -14,18 +14,19 @@ const {
   tap,
   toArray,
 } = require('rxjs/operators')
+const yargs = require('yargs')
 
 const createChildProcessObservable = require('./createChildProcessObservable.js')
 const logSectionBreak = require('./logSectionBreak.js')
 
 const loopTypes = [
-  // 'arrayPrototype',
-  // 'forWithLength',
+  'arrayPrototype',
+  'forWithLength',
   // 'forWithoutLength',
-  // 'lodash',
+  'lodash',
   'ramdaFunctional',
-  // 'ramdaTransducer',
-  // 'rxjsPipeline',
+  'ramdaTransducer',
+  'rxjsPipeline',
   // 'rxjsSubscriber',
 ]
 
@@ -70,10 +71,10 @@ const tasks = [
   //   count: 10000000,
   //   taskName: 'basicLoop',
   // },
-  {
-    count: 10,
-    taskName: 'duplicateUp',
-  },
+  // {
+  //   count: 10,
+  //   taskName: 'duplicateUp',
+  // },
   // {
   //   count: 100,
   //   taskName: 'duplicateUp',
@@ -93,6 +94,18 @@ const tasks = [
   // {
   //   count: Infinity,
   //   taskName: 'filterDown',
+  // },
+  {
+    count: 10,
+    taskName: 'incrementingTransform',
+  },
+  // {
+  //   count: 100,
+  //   taskName: 'incrementingTransform',
+  // },
+  // {
+  //   count: Infinity,
+  //   taskName: 'incrementingTransform',
   // },
 ]
 
@@ -164,6 +177,6 @@ from(
         encoding: 'utf-8',
       },
     )
-  ))
+  )),
 )
 .subscribe()

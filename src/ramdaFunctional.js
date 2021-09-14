@@ -1,4 +1,5 @@
 const {
+  addIndex,
   append,
   filter,
   flatten,
@@ -12,11 +13,10 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
-  basicLoop: () => {
+  basicLoop: () => (
     forEach(
       (
         Function
@@ -25,9 +25,9 @@ const tasks = {
     )(
       array,
     )
-  },
-  duplicateUp: () => {
-    return pipe(
+  ),
+  duplicateUp: () => (
+    pipe(
       filter(
         Boolean
       ),
@@ -51,8 +51,8 @@ const tasks = {
     )(
       blocklist
     )
-  },
-  filterDown: () => {
+  ),
+  filterDown: () => (
     pipe(
       filter(
         Boolean
@@ -75,21 +75,41 @@ const tasks = {
     )(
       blocklist
     )
-  },
+  ),
+  incrementingTransform: () => (
+    pipe(
+      addIndex(
+        map
+      )((
+        item,
+        index,
+      ) => (
+        index
+        + 2
+      )),
+      filter((
+        number,
+      ) => (
+        (
+          number
+          % 2
+        )
+        === 0
+      )),
+      map((
+        number,
+      ) => (
+        number
+        * 2
+      )),
+    )(
+      array
+    )
+  ),
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
-)
-
-startProcessing()
-
-console.log(
+runTask(
   tasks
-  [taskName]()
 )
 
-stopProcessing()
+module.exports = tasks

@@ -3,11 +3,10 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
-  basicLoop: () => {
+  basicLoop: () => (
     for (
       let index = 0
       ;index < array.length
@@ -16,8 +15,8 @@ const tasks = {
       Function
       .prototype()
     }
-  },
-  filterDown: () => {
+  ),
+  filterDown: () => (
     for (
       let index = 0
       ;index < array.length
@@ -26,19 +25,11 @@ const tasks = {
       Function
       .prototype()
     }
-  },
+  ),
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
+runTask(
+  tasks
 )
 
-startProcessing()
-
-tasks
-[taskName]()
-
-stopProcessing()
+module.exports = tasks

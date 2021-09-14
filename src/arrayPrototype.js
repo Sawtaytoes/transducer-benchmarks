@@ -3,18 +3,17 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
-  basicLoop: () => {
+  basicLoop: () => (
     array
     .forEach(
       Function
       .prototype
     )
-  },
-  duplicateUp: () => {
+  ),
+  duplicateUp: () => (
     blocklist
     .filter(
       Boolean
@@ -36,8 +35,8 @@ const tasks = {
       `*${item}*`,
     ]))
     .flat()
-  },
-  filterDown: () => {
+  ),
+  filterDown: () => (
     blocklist
     .filter(
       Boolean
@@ -57,19 +56,36 @@ const tasks = {
     ) => (
       `*${item}*`
     ))
-  },
+  ),
+  incrementingTransform: () => (
+    array
+    .map((
+      item,
+      index,
+    ) => (
+      index
+      + 2
+    ))
+    .filter((
+      number,
+    ) => (
+      (
+        number
+        % 2
+      )
+      === 0
+    ))
+    .map((
+      number,
+    ) => (
+      number
+      * 2
+    ))
+  ),
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
+runTask(
+  tasks
 )
 
-startProcessing()
-
-tasks
-[taskName]()
-
-stopProcessing()
+module.exports = tasks

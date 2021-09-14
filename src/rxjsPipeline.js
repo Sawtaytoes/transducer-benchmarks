@@ -2,6 +2,7 @@ const {
   from,
 } = require('rxjs')
 const {
+  concatAll,
   filter,
   map,
   tap,
@@ -13,87 +14,117 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const executeRxjs = require('./executeRxjs.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
-  basicLoop: () => {
-    from(
-      array
-    )
-    .pipe(
-      tap(
-        Function
-        .prototype
+  basicLoop: () => (
+    executeRxjs(
+      from(
+        array
+      )
+      .pipe(
+        tap(
+          Function
+          .prototype
+        )
       )
     )
-    .subscribe()
-  },
-  duplicateUp: () => {
-    from(
-      blocklist
-    )
-    .pipe(
-      filter(
-        Boolean
-      ),
-      filter((
-        item,
-      ) => (
-        !(
-          allowlist
-          .includes(
-            item
+  ),
+  duplicateUp: () => (
+    executeRxjs(
+      from(
+        blocklist
+      )
+      .pipe(
+        filter(
+          Boolean
+        ),
+        filter((
+          item,
+        ) => (
+          !(
+            allowlist
+            .includes(
+              item
+            )
           )
-        )
-      )),
-      map((
-        item,
-      ) => ([
-        item,
-        `*${item}*`,
-      ])),
-      toArray(),
+        )),
+        map((
+          item,
+        ) => ([
+          item,
+          `*${item}*`,
+        ])),
+        concatAll(),
+        toArray(),
+      )
     )
-  },
-  filterDown: () => {
-    from(
-      blocklist
-    )
-    .pipe(
-      filter(
-        Boolean
-      ),
-      filter((
-        item,
-      ) => (
-        !(
-          allowlist
-          .includes(
-            item
+  ),
+  filterDown: () => (
+    executeRxjs(
+      from(
+        blocklist
+      )
+      .pipe(
+        filter(
+          Boolean
+        ),
+        filter((
+          item,
+        ) => (
+          !(
+            allowlist
+            .includes(
+              item
+            )
           )
-        )
-      )),
-      map((
-        item,
-      ) => (
-        `*${item}*`
-      )),
-      toArray(),
+        )),
+        map((
+          item,
+        ) => (
+          `*${item}*`
+        )),
+        toArray(),
+      )
     )
-  },
+  ),
+  incrementingTransform: () => (
+    executeRxjs(
+      from(
+        array
+      )
+      .pipe(
+        map((
+          item,
+          index,
+        ) => (
+          index
+          + 2
+        )),
+        filter((
+          number,
+        ) => (
+          (
+            number
+            % 2
+          )
+          === 0
+        )),
+        map((
+          number,
+        ) => (
+          number
+          * 2
+        )),
+        toArray(),
+      )
+    )
+  ),
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
+runTask(
+  tasks
 )
 
-startProcessing()
-
-tasks
-[taskName]()
-
-stopProcessing()
+module.exports = tasks

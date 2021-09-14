@@ -3,44 +3,124 @@ const {
   array,
   blocklist,
 } = require('./arrays.js')
-const taskName = require('./taskName.js')
-const timer = require('./timer.js')
+const runTask = require('./runTask.js')
 
 const tasks = {
   basicLoop: () => {
+    let outputValue
+
     for (
       let index = 0,
         length = array.length
       ;index < length
       ;index += 1
     ) {
-      Function
-      .prototype()
+      outputValue = (
+        Function
+        .prototype()
+      )
     }
+
+    return outputValue
+  },
+  duplicateUp: () => {
+    let outputValue = []
+
+    for (
+      let index = 0,
+        length = blocklist.length
+      ;index < length
+      ;index += 1
+    ) {
+      const item = blocklist[index]
+
+      if (
+        item
+        && (
+          !(
+            allowlist
+            .includes(
+              item
+            )
+          )
+        )
+      ) {
+        outputValue
+        .push(
+          item,
+          `*${item}*`,
+        )
+      }
+    }
+
+    return outputValue
   },
   filterDown: () => {
+    let outputValue = []
+
+    for (
+      let index = 0,
+        length = blocklist.length
+      ;index < length
+      ;index += 1
+    ) {
+      const item = blocklist[index]
+
+      if (
+        item
+        && (
+          !(
+            allowlist
+            .includes(
+              item
+            )
+          )
+        )
+      ) {
+        outputValue
+        .push(
+          `*${item}*`
+        )
+      }
+    }
+
+    return outputValue
+  },
+  incrementingTransform: () => {
+    let outputValue = []
+
     for (
       let index = 0,
         length = array.length
       ;index < length
       ;index += 1
     ) {
-      Function
-      .prototype()
+      let number = (
+        index
+        + 2
+      )
+
+      if (
+        (
+          number
+          % 2
+        )
+        === 0
+      ) {
+        outputValue
+        .push(
+          number
+          * 2
+        )
+      }
     }
+
+    return outputValue
   },
 }
 
-const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
+runTask(
+  tasks
 )
 
-startProcessing()
-
-tasks
-[taskName]()
-
-stopProcessing()
+module.exports = tasks

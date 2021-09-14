@@ -1,25 +1,116 @@
 const {
+  filter,
+  flatten,
   forEach,
+  includes,
+  map,
 } = require('lodash')
 
-const array = require('./array.js')
-const timer = require('./timer.js')
-
 const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
-)
-
-startProcessing()
-
-forEach(
+  allowlist,
   array,
-  (
-    Function
-    .prototype
+  blocklist,
+} = require('./arrays.js')
+const runTask = require('./runTask.js')
+
+const tasks = {
+  basicLoop: () => (
+    forEach(
+      array,
+      (
+        Function
+        .prototype
+      ),
+    )
   ),
+  duplicateUp: () => (
+    flatten(
+      map(
+        filter(
+          filter(
+            blocklist,
+            Boolean,
+          ),
+          (
+            item,
+          ) => (
+            !(
+              allowlist
+              .includes(
+                item
+              )
+            )
+          ),
+        ),
+        (
+          item,
+        ) => ([
+          item,
+          `*${item}*`,
+        ]),
+      )
+    )
+  ),
+  filterDown: () => (
+    map(
+      filter(
+        filter(
+          blocklist,
+          Boolean,
+        ),
+        (
+          item,
+        ) => (
+          !(
+            allowlist
+            .includes(
+              item
+            )
+          )
+        ),
+      ),
+      (
+        item,
+      ) => (
+        `*${item}*`
+      ),
+    )
+  ),
+  incrementingTransform: () => (
+    map(
+      filter(
+        map(
+          array,
+          (
+            item,
+            index,
+          ) => (
+            index
+            + 2
+          ),
+        ),
+        (
+          number,
+        ) => (
+          (
+            number
+            % 2
+          )
+          === 0
+        ),
+      ),
+      (
+        number,
+      ) => (
+        number
+        * 2
+      ),
+    )
+  ),
+}
+
+runTask(
+  tasks
 )
 
-stopProcessing()
+module.exports = tasks

@@ -1,44 +1,151 @@
 const {
+  addIndex,
+  append,
+  compose,
+  filter,
+  flatten,
+  flip,
+  forEach,
+  includes,
+  map,
   tap,
   transduce,
 } = require('ramda')
 
-const array = require('./array.js')
-const timer = require('./timer.js')
-
 const {
-  startProcessing,
-  stopProcessing,
-} = (
-  timer()
-)
-
-startProcessing()
-
-// transduce(
-//   tap(
-//     Function
-//     .prototype
-//   ),
-//   (
-//     flip(
-//       append
-//     )
-//   ),
-//   [],
-//   array,
-// )
-transduce(
-  tap(
-    Function
-    .prototype
-  ),
-  (
-    Function
-    .prototype
-  ),
-  null,
+  allowlist,
   array,
+  blocklist,
+} = require('./arrays.js')
+const runTask = require('./runTask.js')
+
+const tasks = {
+  basicLoop: () => (
+    transduce(
+      tap(
+        Function
+        .prototype
+      )
+    )(
+      (
+        Function
+        .prototype
+      ),
+      null,
+      array,
+    )
+  ),
+  duplicateUp: () => (
+    flatten(
+      transduce(
+        compose(
+          filter(
+            Boolean
+          ),
+          filter((
+            item,
+          ) => (
+            !(
+              includes(
+                item
+              )(
+                allowlist
+              )
+            )
+          )),
+          map((
+            item,
+          ) => ([
+            item,
+            `*${item}*`,
+          ])),
+        )
+      )(
+        (
+          flip(
+            append
+          )
+        ),
+        [],
+        blocklist,
+      )
+    )
+  ),
+  filterDown: () => (
+    transduce(
+      compose(
+        filter(
+          Boolean
+        ),
+        filter((
+          item,
+        ) => (
+          !(
+            includes(
+              item
+            )(
+              allowlist
+            )
+          )
+        )),
+        map((
+          item,
+        ) => (
+          `*${item}*`
+        )),
+      )
+    )(
+      (
+        flip(
+          append
+        )
+      ),
+      [],
+      blocklist,
+    )
+  ),
+  incrementingTransform: () => (
+    transduce(
+      compose(
+        addIndex(
+          map
+        )((
+          item,
+          index,
+        ) => (
+          index
+          + 2
+        )),
+        filter((
+          number,
+        ) => (
+          (
+            number
+            % 2
+          )
+          === 0
+        )),
+        map((
+          number,
+        ) => (
+          number
+          * 2
+        )),
+      )
+    )(
+      (
+        flip(
+          append
+        )
+      ),
+      [],
+      array,
+    )
+  ),
+}
+
+runTask(
+  tasks
 )
 
-stopProcessing()
+module.exports = tasks
