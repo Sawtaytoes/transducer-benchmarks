@@ -5,8 +5,25 @@ const {
   tap,
 } = require('rxjs/operators')
 
-const array = require('./array.js')
+const {
+  allowlist,
+  array,
+  blocklist,
+} = require('./arrays.js')
+const taskName = require('./taskName.js')
 const timer = require('./timer.js')
+
+const tasks = {
+  basicLoop: () => {
+    from(
+      array
+    )
+    .subscribe(
+      Function
+      .prototype
+    )
+  },
+}
 
 const {
   startProcessing,
@@ -17,12 +34,7 @@ const {
 
 startProcessing()
 
-from(
-  array
-)
-.subscribe(
-  Function
-  .prototype
-)
+tasks
+[taskName]()
 
 stopProcessing()

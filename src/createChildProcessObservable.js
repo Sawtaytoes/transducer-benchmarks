@@ -8,6 +8,7 @@ const {
 const createChildProcessObservable = ({
   count,
   filename,
+  taskName,
 }) => (
   Observable
   .create((
@@ -28,6 +29,8 @@ const createChildProcessObservable = ({
         [
           '--count',
           count,
+          '--taskName',
+          taskName,
         ],
         {
           signal,

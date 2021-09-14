@@ -1,10 +1,15 @@
 const {
+  writeFile,
+} = require('fs/promises')
+const {
+  bindNodeCallback,
   from,
   of,
 } = require('rxjs')
 const {
   concatMap,
   map,
+  pluck,
   repeat,
   tap,
   toArray,
@@ -13,28 +18,82 @@ const {
 const createChildProcessObservable = require('./createChildProcessObservable.js')
 const logSectionBreak = require('./logSectionBreak.js')
 
-const counts = [
-  0,
-  1,
-  10,
-  100,
-  1000,
-  5000,
-  10000,
-  100000,
-  1000000,
-  10000000,
+const loopTypes = [
+  // 'arrayPrototype',
+  // 'forWithLength',
+  // 'forWithoutLength',
+  // 'lodash',
+  'ramdaFunctional',
+  // 'ramdaTransducer',
+  // 'rxjsPipeline',
+  // 'rxjsSubscriber',
 ]
 
-const loopTypes = [
-  'forEach',
-  'forWithLength',
-  'forWithoutLength',
-  'lodash',
-  'ramdaFunctional',
-  'ramdaTransducer',
-  'rxjsPipeline',
-  'rxjsSubscriber',
+const tasks = [
+  // {
+  //   count: 0,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 1,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 10,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 100,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 1000,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 5000,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 10000,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 100000,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 1000000,
+  //   taskName: 'basicLoop',
+  // },
+  // {
+  //   count: 10000000,
+  //   taskName: 'basicLoop',
+  // },
+  {
+    count: 10,
+    taskName: 'duplicateUp',
+  },
+  // {
+  //   count: 100,
+  //   taskName: 'duplicateUp',
+  // },
+  // {
+  //   count: Infinity,
+  //   taskName: 'duplicateUp',
+  // },
+  // {
+  //   count: 10,
+  //   taskName: 'filterDown',
+  // },
+  // {
+  //   count: 100,
+  //   taskName: 'filterDown',
+  // },
+  // {
+  //   count: Infinity,
+  //   taskName: 'filterDown',
+  // },
 ]
 
 logSectionBreak()
@@ -47,51 +106,64 @@ from(
     loopType,
   ) => (
     from(
-      counts
+      tasks
     )
     .pipe(
-      concatMap((
+      concatMap(({
         count,
-      ) => (
+        taskName,
+      }) => (
         createChildProcessObservable({
           count,
           filename: loopType,
+          taskName,
         })
         .pipe(
-          map(({
-            duration,
-          }) => ({
+          // repeat(
+          //   3
+          // ),
+          pluck(
+            'duration'
+          ),
+          toArray(),
+          map((
+            stats,
+          ) => ({
             count,
-            duration,
             loopType,
+            stats,
+            taskName,
           })),
-          // tap((
-          //   data,
-          // ) => {
-          //   console
-          //   .info(
-          //     JSON
-          //     .stringify(
-          //       data,
-          //       null,
-          //       2,
-          //     )
-          //   )
-          // }),
           tap(
             console
             .info
           ),
-          repeat(
-            3
-          ),
-          toArray(),
           tap(
             logSectionBreak
           ),
         )
       )),
+      toArray(),
     )
   )),
+  toArray(),
+  concatMap((
+    data,
+  ) => (
+    writeFile(
+      './stats.json',
+      (
+        JSON
+        .stringify(
+          data,
+          null,
+          2,
+        )
+      ),
+      {
+        encoding: 'utf-8',
+      },
+    )
+  ))
 )
 .subscribe()
