@@ -1,0 +1,1 @@
+require('yargs')(['--count', '10'])

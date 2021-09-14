@@ -4,8 +4,16 @@
   "main": "index.js",
   "author": "Kevin Ghadyani",
   "license": "MIT",
+  "scripts": {
+    "ci:test": "jest test",
+    "ci:start": "node ./src/processRunner.js",
+    "dev:test": "jest test --watch",
+    "start": "nodemon ./src/processRunner.js"
+  },
   "dependencies": {
+    "jest": "^27.2.0",
     "lodash": "^4.17.21",
+    "nodemon": "^2.0.12",
     "ramda": "^0.27.1",
     "rxjs": "^7.3.0",
     "yargs": "^17.1.1"
