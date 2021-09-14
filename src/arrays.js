@@ -21,6 +21,19 @@ module.exports = {
   ),
   blocklist: (
     blocklist
+    .concat(
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+      blocklist,
+    )
     .slice(
       0,
       count,

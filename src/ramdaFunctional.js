@@ -1,8 +1,8 @@
 const {
   addIndex,
   append,
+  chain,
   filter,
-  flatten,
   forEach,
   map,
   pipe,
@@ -18,10 +18,8 @@ const runTask = require('./runTask.js')
 const tasks = {
   basicLoop: () => (
     forEach(
-      (
-        Function
-        .prototype
-      ),
+      Function
+      .prototype
     )(
       array,
     )
@@ -41,13 +39,13 @@ const tasks = {
           )
         )
       )),
-      map((
+      chain((
         item,
       ) => ([
         item,
         `*${item}*`,
+        `*.${item}.*`,
       ])),
-      flatten(),
     )(
       blocklist
     )

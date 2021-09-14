@@ -3,13 +3,13 @@ const {
   append,
   compose,
   filter,
-  flatten,
   flip,
   forEach,
   includes,
   map,
   tap,
   transduce,
+  unnest,
 } = require('ramda')
 
 const {
@@ -36,39 +36,39 @@ const tasks = {
     )
   ),
   duplicateUp: () => (
-    flatten(
-      transduce(
-        compose(
-          filter(
-            Boolean
-          ),
-          filter((
-            item,
-          ) => (
-            !(
-              includes(
-                item
-              )(
-                allowlist
-              )
-            )
-          )),
-          map((
-            item,
-          ) => ([
-            item,
-            `*${item}*`,
-          ])),
-        )
-      )(
-        (
-          flip(
-            append
-          )
+    transduce(
+      compose(
+        filter(
+          Boolean
         ),
-        [],
-        blocklist,
+        filter((
+          item,
+        ) => (
+          !(
+            includes(
+              item
+            )(
+              allowlist
+            )
+          )
+        )),
+        map((
+          item,
+        ) => ([
+          item,
+          `*${item}*`,
+          `*.${item}.*`,
+        ])),
+        unnest(),
       )
+    )(
+      (
+        flip(
+          append
+        )
+      ),
+      [],
+      blocklist,
     )
   ),
   filterDown: () => (

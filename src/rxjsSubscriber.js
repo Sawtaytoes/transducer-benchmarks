@@ -2,7 +2,7 @@ const {
   from,
 } = require('rxjs')
 const {
-  concatAll,
+  concatMap,
   filter,
   map,
   tap,
@@ -58,13 +58,13 @@ const tasks = {
             )
           )
         )),
-        map((
+        concatMap((
           item,
         ) => ([
           item,
           `*${item}*`,
+          `*.${item}.*`,
         ])),
-        concatAll(),
         toArray(),
       )
     )

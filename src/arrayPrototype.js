@@ -28,13 +28,13 @@ const tasks = {
         )
       )
     ))
-    .map((
+    .flatMap((
       item,
     ) => ([
       item,
       `*${item}*`,
+      `*.${item}.*`,
     ]))
-    .flat()
   ),
   filterDown: () => (
     blocklist

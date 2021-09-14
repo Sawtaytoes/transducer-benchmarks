@@ -49,6 +49,7 @@ const tasks = {
         .push(
           item,
           `*${item}*`,
+          `*.${item}.*`,
         )
       }
     }

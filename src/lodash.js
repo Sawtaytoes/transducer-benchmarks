@@ -47,6 +47,7 @@ const tasks = {
         ) => ([
           item,
           `*${item}*`,
+          `*.${item}.*`,
         ]),
       )
     )
