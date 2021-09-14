@@ -82,6 +82,14 @@ const tasks = [
     taskName: 'duplicateUp',
   },
   {
+    count: 1000,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: 10000,
+    taskName: 'duplicateUp',
+  },
+  {
     count: Infinity,
     taskName: 'duplicateUp',
   },
@@ -91,6 +99,14 @@ const tasks = [
   },
   {
     count: 100,
+    taskName: 'filterDown',
+  },
+  {
+    count: 1000,
+    taskName: 'filterDown',
+  },
+  {
+    count: 10000,
     taskName: 'filterDown',
   },
   {
@@ -165,31 +181,9 @@ from(
           map((
             stats,
           ) => ({
-            average: (
-              stats
-              ? (
-                (
-                  stats
-                  .filter(
-                    Boolean
-                  )
-                  .reduce((
-                    total,
-                    value,
-                  ) => (
-                    total
-                    + value
-                  ))
-                ) / (
-                  stats
-                  .length
-                )
-              )
-              : null
-            ),
             count,
             loopType,
-            median: (
+            medianAverage: (
               stats
               ? (
                 stats
@@ -204,7 +198,6 @@ from(
               )
               : null
             ),
-            stats,
             taskName,
           })),
           tap(
