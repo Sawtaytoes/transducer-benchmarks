@@ -23,6 +23,7 @@ const loopTypes = [
   'arrayPrototype',
   'forWithLength',
   'forWithoutLength',
+  'kevinTransducers',
   'lodash',
   'ramdaFunctional',
   'ramdaTransducer',
@@ -31,6 +32,8 @@ const loopTypes = [
   'rxjsSubscriber',
   'thing',
 ]
+
+const numberOfIterations = 10
 
 const tasks = [
   {
@@ -83,6 +86,14 @@ const tasks = [
   },
   {
     count: 1000,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: 2000,
+    taskName: 'duplicateUp',
+  },
+  {
+    count: 5000,
     taskName: 'duplicateUp',
   },
   {
@@ -167,7 +178,7 @@ from(
         })
         .pipe(
           repeat(
-            10
+            numberOfIterations
           ),
           pluck(
             'duration'
@@ -193,7 +204,10 @@ from(
                 .slice()
                 .sort()
                 .at(
-                  5
+                  Math
+                  .floor(
+                    numberOfIterations / 2
+                  )
                 )
               )
               : null
