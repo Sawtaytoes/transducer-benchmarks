@@ -1,31 +1,53 @@
 const addCount = require('./addCount.js')
 
 const reduce = (
-  (reducer, initialState) => (
-    addCount(nextReducer => {
-      let nextValue
+  reducer,
+  initialState,
+) => (
+  addCount((
+    nextReducer,
+  ) => (
+    (
+      context,
+      value,
+      count,
+    ) => {
+      const nextState = (
+        reducer(
+          (
+            (
+              count
+              === 0
+            )
+            ? initialState
+            : (
+              context
+              .state
+            )
+          ),
+          value,
+          count,
+        )
+      )
 
       return (
         (
-          {
-            isComplete = true,
-            ...context
-          },
-          value,
-          count,
-        ) => {
-          const nextState = reducer(
-            count === 0 ? initialState : context.state,
-            value,
-            count,
+          (
+            typeof isComplete
+            === 'undefined'
           )
-
-          return (
-            isComplete
-            ? nextReducer(context, nextState)
-            : nextState
+          || (
+            context
+            .isComplete
           )
-        }
+        )
+        ? (
+          nextReducer(
+            context,
+            nextState,
+          )
+        )
+        : nextState
       )
     }
   ))
