@@ -6,7 +6,6 @@ const separate = () => (
   ) => (
     context,
     array,
-    count,
   ) => (
     array
     .reduce(
