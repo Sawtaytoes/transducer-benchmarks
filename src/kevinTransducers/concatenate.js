@@ -1,18 +1,44 @@
-const reduce = require('./reduce.js')
+const addCount = require('./addCount.js')
 
-const concatenate = () => (
-  reduce(
-    (
-      state,
-      value,
+const concatenate = () => {
+  const array = []
+
+  return (
+    addCount((
+      nextReducer,
     ) => (
-      state
-      .concat(
-        value
-      )
-    ),
-    [],
+      (
+        context,
+        value,
+        count,
+      ) => {
+        array
+        .push(
+          value
+        )
+
+        return (
+          (
+            (
+              typeof isComplete
+              === 'undefined'
+            )
+            || (
+              context
+              .isComplete
+            )
+          )
+          ? (
+            nextReducer(
+              context,
+              array,
+            )
+          )
+          : array
+        )
+      }
+    ))
   )
-)
+}
 
 module.exports = concatenate
