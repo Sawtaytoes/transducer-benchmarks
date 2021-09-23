@@ -33,7 +33,10 @@ const reduce = (
       return (
         (
           (
-            typeof isComplete
+            typeof (
+              context
+              .isComplete
+            )
             === 'undefined'
           )
           || (

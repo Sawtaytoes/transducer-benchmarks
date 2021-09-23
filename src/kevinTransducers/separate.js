@@ -4,10 +4,7 @@ const separate = () => (
   addCount((
     nextReducer,
   ) => (
-    {
-      isComplete = true,
-      ...context
-    },
+    context,
     array,
     count,
   ) => (
@@ -22,7 +19,17 @@ const separate = () => (
           {
             ...context,
             isComplete: (
-              isComplete
+              (
+                typeof (
+                  context
+                  .isComplete
+                )
+                === 'undefined'
+              )
+              || (
+                context
+                .isComplete
+              )
               && (
                 index
                 === (
