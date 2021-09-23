@@ -1,5 +1,6 @@
 const concatenate = require('./kevinTransducers/concatenate.js')
 const filter = require('./kevinTransducers/filter.js')
+const flatConcatenate = require('./kevinTransducers/flatConcatenate.js')
 const map = require('./kevinTransducers/map.js')
 const separate = require('./kevinTransducers/separate.js')
 const tap = require('./kevinTransducers/tap.js')
@@ -43,8 +44,7 @@ const tasks = {
         `*${item}*`,
         `*.${item}.*`,
       ])),
-      separate(),
-      concatenate(),
+      flatConcatenate(),
     )(
       blocklist
     )
